@@ -6,11 +6,12 @@ node_modules/
 .env.local
 .env.*.local
 
-# Database
+# Database (runtime)
 data/*.db
 data/*.db-wal
 data/*.db-shm
 data/uploads/
+data/last-notified.txt
 
 # Logs
 *.log

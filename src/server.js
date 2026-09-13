@@ -347,6 +347,7 @@ app.use((err, req, res, next) => {
   res.status(status).json({ ok: false, error: err.message || String(err) });
 });
 
-app.listen(PORT, () => {
+const HOST = process.env.HOST || "127.0.0.1";
+app.listen(PORT, HOST, () => {
   console.log(`ESG portal running on http://127.0.0.1:${PORT}`);
 });
