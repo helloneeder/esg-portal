@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>凌朝智绿 - ESG 信息收集问卷</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a1a2e;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h1::before {
+      content: "🌿";
+      font-size: 28px;
+    }
+    h2 {
+      font-size: 17px;
+      font-weight: 600;
+      color: #334155;
+      margin: 0 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    label {
+      font-size: 13px;
+      color: #475569;
+      display:block;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      background: #fafbfc;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #4f46e5;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    .card {
+      border: 1px solid #e2e8f0;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 16px 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .row { margin: 12px 0; }
+    .muted { color: #64748b; font-size: 13px; line-height: 1.5; }
+    .btn {
+      padding: 14px 28px;
+      border-radius: 12px;
+      border: 0;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: #fff;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+    }
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .ok { color: #059669; font-weight: 500; }
+    .err { color: #dc2626; font-weight: 500; }
+    .info-box {
+      background: linear-gradient(135deg, #eef2ff 0%, #faf5ff 100%);
+      border: 1px solid #c7d2fe;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin: 24px 0 16px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .project-card {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+    .project-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 12px;
+    }
+    .file-upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      background: #f8fafc;
+      transition: all 0.2s ease;
+    }
+    .file-upload-area:hover {
+      border-color: #4f46e5;
+      background: #eef2ff;
+    }
+    .result-box {
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 16px;
+    }
+    .result-box.success {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+    }
+    .result-box.error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+    }
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+      body { padding: 16px 12px 32px; }
+      h1 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>保安服务企业 ESG 信息收集问卷</h1>
+    <div class="info-box">
+      <p class="muted">
+        📋 <strong>用途说明</strong>:本问卷用于生成 ESG 报告素材与可量化指标。<br>
+        👥 建议由行政/人力/运营/安防项目负责人共同完成。<br>
+        💡 若暂无精确数据,可填写区间或估算值,并在"口径说明"中注明统计范围与时间。<br>
+        📁 支持上传 PDF/Excel/PPTX,单个文件≤50MB。
+      </p>
+    </div>
+  </div>
+  <p class="muted">用途:用于形成 ESG 报告素材与可量化指标。建议由行政/人力/运营/安防项目负责人共同完成。若暂无精确数据,可填写区间或估算值,并在"口径说明"中注明统计范围与时间。支持上传 PDF/Excel/PPTX,单个文件≤50MB。</p>
+
+  <form id="f" class="card">
+    <input type="hidden" name="token" id="token" />
+
+    <div class="section-title">📋 一、公司基本信息(建议必填)</div>
+    <p class="muted" style="margin-bottom: 16px;">这些信息用于确定报告边界(统计口径)与业务概况展示,不涉及对外披露的敏感财务细节可留空或填区间。</p>
+
+    <div class="grid">
+      <div class="row">
+        <label>公司名称(必填)</label>
+        <input name="companyName" required />
+      </div>
+      <div class="row">
+        <label>行业/细分(建议必填)</label>
+        <input name="industry" placeholder="例如:保安服务/物业安保/安防运营/押运(如适用)" />
+        <div class="muted">用于对标同行与选择合适的 ESG 指标表述。</div>
+      </div>
+      <div class="row">
+        <label>服务覆盖地区(省/市)</label>
+        <input name="region" placeholder="例如:广东(深圳/广州)、上海、北京" />
+        <div class="muted">可填总部所在地 + 主要项目所在地。</div>
+      </div>
+      <div class="row">
+        <label>是否上市</label>
+        <select name="listingStatus">
+          <option value="">请选择</option>
+          <option value="未上市">未上市</option>
+          <option value="A股">A股</option>
+          <option value="港股">港股</option>
+          <option value="美股/其他">美股/其他</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>员工规模(建议必填)</label>
+        <select name="employeesRange">
+          <option value="">请选择</option>
+          <option value="<50">&lt;50</option>
+          <option value="50-199">50-199</option>
+          <option value="200-999">200-999</option>
+          <option value=">=1000">≥1000</option>
+        </select>
+        <div class="muted">若有大量一线安保人员与后台人员结构差异,可在后文补充。</div>
+      </div>
+      <div class="row">
+        <label>年营收区间(可选)</label>
+        <select name="revenueRange">
+          <option value="">请选择</option>
+          <option value="<1000万">&lt;1000万</option>
+          <option value="1000万-1亿">1000万-1亿</option>
+          <option value="1亿-10亿">1亿-10亿</option>
+          <option value=">=10亿">≥10亿</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>联系人</label>
+        <input name="contactName" />
+      </div>
+      <div class="row">
+        <label>联系邮箱</label>
+        <input name="contactEmail" type="email" />
+      </div>
+    </div>
+
+    <div class="section-title">🎯 二、服务项目与 ESG 价值(重点,建议尽量填写)</div>
+    <p class="muted" style="margin-bottom: 16px;">这一部分将直接用于展示贵司"为客户提供的服务质量、风险管理与社会价值"。请优先把可量化信息补齐(项目数量、覆盖点位、响应时效、培训/持证、事故率、满意度等)。</p>
+
+    <div class="row">
+      <label>主要服务类型(可多选,用逗号分隔)</label>
+      <input name="serviceTypes" placeholder="例如:门岗/巡逻/监控中心值守/大型活动安保/临时勤务/秩序维护/停车场管理/应急处置" />
+      <div class="muted">可按你们实际业务写,越具体越好。</div>
+    </div>
+
+    <div class="grid">
+      <div class="row">
+        <label>在管/在服项目数量(个)</label>
+        <input name="activeProjectsCount" type="number" step="1" />
+      </div>
+      <div class="row">
+        <label>覆盖点位/岗点数量(个,可选)</label>
+        <input name="postsCount" type="number" step="1" />
+      </div>
+      <div class="row">
+        <label>服务客户行业(前 3 类)</label>
+        <input name="clientIndustries" placeholder="例如:商业综合体/工业园区/学校/医院/数据中心/住宅物业" />
+      </div>
+      <div class="row">
+        <label>高风险场景覆盖(如适用)</label>
+        <input name="highRiskScenarios" placeholder="例如:危化园区/医院急诊/大型活动/金融网点" />
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="row">
+        <label>平均响应时效(分钟,可选)</label>
+        <input name="avgResponseMinutes" type="number" step="any" />
+        <div class="muted">例如:报警/事件从触发到到场/处置的平均用时。</div>
+      </div>
+      <div class="row">
+        <label>重大事件处置次数(过去 12 个月,可选)</label>
+        <input name="majorIncidentsHandled" type="number" step="1" />
+        <div class="muted">如火警/盗抢/群体性事件/医疗纠纷协助等(可匿名)。</div>
+      </div>
+      <div class="row">
+        <label>客户满意度(% 或评分,可选)</label>
+        <input name="clientSatisfaction" placeholder="例如:95% / 4.7/5 / NPS=45" />
+      </div>
+      <div class="row">
+        <label>投诉率/纠纷(过去 12 个月,可选)</label>
+        <input name="complaintsOrDisputes" placeholder="例如:投诉 12 起;重大纠纷 0" />
+      </div>
+    </div>
+
+    <h2 style="font-size:16px;margin:14px 0 10px;">三、项目级填写(至少 3 个项目位,可选但强烈建议填写)</h2>
+    <div class="muted">请按"典型/重点/代表性"选择项目填写(可脱敏)。每个项目的 KPI 都可留空:有就填,没有也没关系;但越量化,越能体现服务质量与 ESG 价值。</div>
+
+    <div class="section-title">📁 三、项目级填写(至少 3 个项目位,可选但强烈建议填写)</div>
+    <p class="muted" style="margin-bottom: 16px;">请按"典型/重点/代表性"选择项目填写(可脱敏)。每个项目的 KPI 都可留空:有就填,没有也没关系;但越量化,越能体现服务质量与 ESG 价值。</p>
+
+    <div class="project-card">
+      <h3>🏢 项目 1</h3>
+      <div class="grid">
+        <div class="row">
+          <label>项目名称/代号(可脱敏)</label>
+          <input name="p1_name" placeholder="例如:某商业综合体 A / 某医院 B" />
+        </div>
+        <div class="row">
+          <label>客户类型/场景</label>
+          <input name="p1_scene" placeholder="例如:商业综合体/医院/学校/园区/数据中心/大型活动" />
+        </div>
+        <div class="row">
+          <label>服务内容(逗号分隔)</label>
+          <input name="p1_services" placeholder="例如:门岗、巡逻、监控中心值守、应急处置" />
+        </div>
+        <div class="row">
+          <label>岗点/点位数量(个,可选)</label>
+          <input name="p1_posts" type="number" step="1" />
+        </div>
+        <div class="row">
+          <label>平均响应时效(分钟,可选)</label>
+          <input name="p1_respMin" type="number" step="any" />
+        </div>
+        <div class="row">
+          <label>巡更/巡检频次(可选)</label>
+          <input name="p1_patrolFreq" placeholder="例如:每2小时一次/每日3次" />
+        </div>
+        <div class="row">
+          <label>事件/隐患处置数量(过去12个月,可选)</label>
+          <input name="p1_events" placeholder="例如:隐患整改 36 起;突发事件 2 起" />
+        </div>
+        <div class="row">
+          <label>客户满意度(%或评分,可选)</label>
+          <input name="p1_sat" placeholder="例如:95% / 4.7/5" />
+        </div>
+      </div>
+      <div class="row">
+        <label>本项目改进举措/亮点(可选)</label>
+        <textarea name="p1_highlights" placeholder="例如:上线电子巡更+访客系统;完善夜间巡逻路线;联动消防演练;客户投诉下降..."></textarea>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="project-card">
+      <h3>🏢 项目 2</h3>
+      <div class="grid">
+        <div class="row"><label>项目名称/代号(可脱敏)</label><input name="p2_name" /></div>
+        <div class="row"><label>客户类型/场景</label><input name="p2_scene" /></div>
+        <div class="row"><label>服务内容(逗号分隔)</label><input name="p2_services" /></div>
+        <div class="row"><label>岗点/点位数量(个,可选)</label><input name="p2_posts" type="number" step="1" /></div>
+        <div class="row"><label>平均响应时效(分钟,可选)</label><input name="p2_respMin" type="number" step="any" /></div>
+        <div class="row"><label>巡更/巡检频次(可选)</label><input name="p2_patrolFreq" /></div>
+        <div class="row"><label>事件/隐患处置数量(过去12个月,可选)</label><input name="p2_events" /></div>
+        <div class="row"><label>客户满意度(%或评分,可选)</label><input name="p2_sat" /></div>
+      </div>
+      <div class="row"><label>本项目改进举措/亮点(可选)</label><textarea name="p2_highlights"></textarea></div>
+    </div>
+
+    </div>
+
+    <div class="project-card">
+      <h3>🏢 项目 3</h3>
+      <div class="grid">
+        <div class="row"><label>项目名称/代号(可脱敏)</label><input name="p3_name" /></div>
+        <div class="row"><label>客户类型/场景</label><input name="p3_scene" /></div>
+        <div class="row"><label>服务内容(逗号分隔)</label><input name="p3_services" /></div>
+        <div class="row"><label>岗点/点位数量(个,可选)</label><input name="p3_posts" type="number" step="1" /></div>
+        <div class="row"><label>平均响应时效(分钟,可选)</label><input name="p3_respMin" type="number" step="any" /></div>
+        <div class="row"><label>巡更/巡检频次(可选)</label><input name="p3_patrolFreq" /></div>
+        <div class="row"><label>事件/隐患处置数量(过去12个月,可选)</label><input name="p3_events" /></div>
+        <div class="row"><label>客户满意度(%或评分,可选)</label><input name="p3_sat" /></div>
+      </div>
+      <div class="row"><label>本项目改进举措/亮点(可选)</label><textarea name="p3_highlights"></textarea></div>
+    </div>
+
+    <div class="row">
+      <label>补充:更多项目/其它说明(可选)</label>
+      <textarea name="serviceCases" placeholder="如果还有更多项目或想补充 KPI/案例,可在此继续写(可脱敏)。"></textarea>
+    </div>
+
+    </div>
+    
+    <div class="section-title">👥 四、人员与职业健康安全（S，重点）</div>
+    <p class="muted" style="margin-bottom: 16px;">安保服务的 ESG 关键在于一线人员管理、培训、合规与职业健康安全（OHS）。尽量提供"人数、覆盖率、频次、事故率"。</p>
+
+    <div class="grid">
+      <div class="row">
+        <label>一线安保人员数量(人,可选)</label>
+        <input name="frontlineGuardsCount" type="number" step="1" />
+      </div>
+      <div class="row">
+        <label>后台/管理人员数量(人,可选)</label>
+        <input name="managementStaffCount" type="number" step="1" />
+      </div>
+      <div class="row">
+        <label>持证上岗覆盖率(% 可选)</label>
+        <input name="licensedCoveragePercent" type="number" step="any" min="0" max="100" />
+        <div class="muted">如保安员证/消防设施操作员证等。</div>
+      </div>
+      <div class="row">
+        <label>年度人均培训时长(小时/人,可选)</label>
+        <input name="trainingHoursPerCapita" type="number" step="any" />
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="row">
+        <label>年度工伤/事故次数(起,可选)</label>
+        <input name="workInjuriesCount" type="number" step="1" />
+      </div>
+      <div class="row">
+        <label>年度缺勤天数(天,可选)</label>
+        <input name="lostDaysCount" type="number" step="1" />
+      </div>
+      <div class="row">
+        <label>是否建立 OHS 管理体系</label>
+        <select name="ohsSystem">
+          <option value="">请选择</option>
+          <option value="未建立">未建立</option>
+          <option value="已建立-未认证">已建立(未认证)</option>
+          <option value="ISO45001">ISO45001 认证</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>员工关怀/福利举措(可选)</label>
+        <input name="employeeWelfare" placeholder="例如:高温补贴/住宿餐补/心理关怀/困难援助" />
+      </div>
+    </div>
+
+    <div class="section-title">🌱 五、环境（E）数据（如有尽量填写）</div>
+    <div class="grid">
+      <div class="row">
+        <label>年度用电量(kWh)</label>
+        <input name="energyKwhPerYear" type="number" step="any" />
+      </div>
+      <div class="row">
+        <label>可再生能源占比(%)</label>
+        <input name="renewablePercent" type="number" step="any" min="0" max="100" />
+      </div>
+      <div class="row">
+        <label>是否已掌握温室气体数据:Scope 1</label>
+        <select name="scope1Known"><option value="no">否</option><option value="yes">是</option></select>
+      </div>
+      <div class="row">
+        <label>是否已掌握温室气体数据:Scope 2</label>
+        <select name="scope2Known"><option value="no">否</option><option value="yes">是</option></select>
+      </div>
+      <div class="row">
+        <label>是否已掌握温室气体数据:Scope 3</label>
+        <select name="scope3Known"><option value="no">否</option><option value="yes">是</option></select>
+      </div>
+      <div class="row">
+        <label>年度用水量(m3)</label>
+        <input name="waterM3PerYear" type="number" step="any" />
+      </div>
+      <div class="row">
+        <label>年度固废/危废总量(吨)</label>
+        <input name="wasteTonPerYear" type="number" step="any" />
+      </div>
+    </div>
+
+    <div class="section-title">⚖️ 六、治理（G）与其他信息</div>
+    <div class="row">
+      <label>已建立的制度/政策(例如:反贿赂、信息安全、供应商管理、职业健康安全等)</label>
+      <textarea name="governancePolicies"></textarea>
+    </div>
+    <div class="row">
+      <label>近年合规/处罚/重大风险(如无可写"无")</label>
+      <textarea name="complianceIssues"></textarea>
+    </div>
+    <div class="row">
+      <label>ESG目标或计划(如无可留空)</label>
+      <textarea name="esgGoals"></textarea>
+    </div>
+    <div class="row">
+      <label>备注(数据口径、边界、缺失原因等)</label>
+      <textarea name="notes"></textarea>
+    </div>
+
+    <div class="section-title">📎 七、上传资料</div>
+    <div class="row">
+      <label>请上传 PDF / Excel / PPTX（最多 5 个）</label>
+      <div class="file-upload-area">
+        <input name="files" type="file" multiple accept=".pdf,.xls,.xlsx,.pptx,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.presentationml.presentation" />
+        <p class="muted" style="margin-top: 12px;">📁 点击或拖拽文件到此处上传</p>
+      </div>
+      <p class="muted" style="margin-top: 8px;">例如：公司介绍PPT、资质证书汇总、软著清单、能耗台账、社保/培训统计（可脱敏）等。</p>
+    </div>
+
+    <button id="btn" type="submit" class="btn">
+      🚀 提交问卷
+    </button>
+    <div id="msg"></div>
+  </form>
+
+  <script>
+    const f = document.getElementById('f');
+    const btn = document.getElementById('btn');
+    const msg = document.getElementById('msg');
+    const tokenEl = document.getElementById('token');
+
+    const t = new URLSearchParams(location.search).get('t');
+    // Token is optional for public link mode.
+    if (t) tokenEl.value = t;
+
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.innerHTML = '';
+      btn.disabled = true;
+      btn.textContent = '⏳ 提交中...';
+      
+      try {
+        const fd = new FormData(f);
+        const res = await fetch('/api/submit', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || '提交失败');
+        
+        msg.innerHTML = `
+          <div class="result-box success">
+            <span class="ok">✅ 提交成功！</span><br>
+            <span class="muted">提交编号：${data.id}</span><br>
+            <span class="muted">我们将尽快处理您的 ESG 报告生成请求。</span>
+          </div>
+        `;
+        
+        // keep token for subsequent submissions (if allowed)
+        const keepToken = tokenEl.value;
+        f.reset();
+        tokenEl.value = keepToken;
+        
+      } catch (err) {
+        msg.innerHTML = `
+          <div class="result-box error">
+            <span class="err">❌ 提交失败</span><br>
+            <span class="muted">${err.message}</span>
+          </div>
+        `;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🚀 提交问卷';
+      }
+    });
+  </script>
+</body>
+</html>

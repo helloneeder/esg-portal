@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ESG 问卷（物业/园区运营公司专用）</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans CJK SC", "PingFang SC", sans-serif; max-width: 920px; margin: 24px auto; padding: 0 16px; }
+    h1 { font-size: 22px; margin: 0 0 10px; }
+    h2 { font-size: 16px; margin: 16px 0 10px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { font-size: 13px; color: #333; display:block; margin-bottom: 6px; }
+    input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+    textarea { min-height: 92px; }
+    .card { border: 1px solid #eee; padding: 14px; border-radius: 12px; margin: 14px 0; }
+    .row { margin: 10px 0; }
+    .muted { color: #666; font-size: 12px; line-height: 1.45; }
+    button { padding: 10px 14px; border-radius: 10px; border: 0; background: #111; color: #fff; cursor: pointer; }
+    button:disabled { opacity: .6; }
+    .ok { color: #0a7; }
+    .err { color: #c00; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>ESG 问卷（物业/园区运营公司专用）</h1>
+  <p class="muted">用于编制 ESG 报告（E/S/G）。预计 15–25 分钟完成。支持上传 PDF/Excel/PPTX，单个文件≤50MB。</p>
+
+  <form id="f" class="card">
+    <input type="hidden" name="token" id="token" />
+
+    <h2>一、公司基本信息</h2>
+    <div class="grid">
+      <div class="row">
+        <label>公司名称（必填）</label>
+        <input name="companyName" required />
+      </div>
+      <div class="row">
+        <label>业态/类型</label>
+        <input name="industry" placeholder="例如：商业物业/写字楼/园区运营/住宅物业" />
+      </div>
+      <div class="row">
+        <label>地区</label>
+        <input name="region" placeholder="例如：香港/深圳/广州" />
+      </div>
+      <div class="row">
+        <label>是否上市</label>
+        <select name="listingStatus">
+          <option value="">请选择</option>
+          <option value="未上市">未上市</option>
+          <option value="港股">港股</option>
+          <option value="A股">A股</option>
+          <option value="美股/其他">美股/其他</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>员工规模</label>
+        <select name="employeesRange">
+          <option value="">请选择</option>
+          <option value="<50">&lt;50</option>
+          <option value="50-199">50-199</option>
+          <option value="200-999">200-999</option>
+          <option value=">=1000">≥1000</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>联系人</label>
+        <input name="contactName" />
+      </div>
+      <div class="row">
+        <label>联系邮箱</label>
+        <input name="contactEmail" type="email" />
+      </div>
+    </div>
+
+    <h2>二、环境（E）数据（可选）</h2>
+    <div class="grid">
+      <div class="row">
+        <label>年度用电量（kWh）</label>
+        <input name="energyKwhPerYear" type="number" step="any" />
+      </div>
+      <div class="row">
+        <label>可再生能源占比（%）</label>
+        <input name="renewablePercent" type="number" step="any" min="0" max="100" />
+      </div>
+      <div class="row">
+        <label>是否已掌握温室气体数据：Scope 1</label>
+        <select name="scope1Known"><option value="no">否</option><option value="yes">是</option></select>
+      </div>
+      <div class="row">
+        <label>是否已掌握温室气体数据：Scope 2</label>
+        <select name="scope2Known"><option value="no">否</option><option value="yes">是</option></select>
+      </div>
+      <div class="row">
+        <label>是否已掌握温室气体数据：Scope 3</label>
+        <select name="scope3Known"><option value="no">否</option><option value="yes">是</option></select>
+      </div>
+      <div class="row">
+        <label>年度用水量（m³）</label>
+        <input name="waterM3PerYear" type="number" step="any" />
+      </div>
+      <div class="row">
+        <label>年度固废/危废总量（吨）</label>
+        <input name="wasteTonPerYear" type="number" step="any" />
+      </div>
+    </div>
+
+    <h2>三、治理（G）与其他信息</h2>
+    <div class="row">
+      <label>已建立的制度/政策（例如：反贿赂、信息安全、供应商管理、职业健康安全等）</label>
+      <textarea name="governancePolicies"></textarea>
+    </div>
+    <div class="row">
+      <label>近年合规/处罚/重大风险（如无可写“无”）</label>
+      <textarea name="complianceIssues"></textarea>
+    </div>
+    <div class="row">
+      <label>ESG目标或计划（如无可留空）</label>
+      <textarea name="esgGoals"></textarea>
+    </div>
+    <div class="row">
+      <label>备注（数据口径、边界、缺失原因等）</label>
+      <textarea name="notes"></textarea>
+    </div>
+
+    <h2>四、上传资料</h2>
+    <div class="row">
+      <label>请上传 PDF / Excel / PPTX（最多 5 个）</label>
+      <input name="files" type="file" multiple accept=".pdf,.xls,.xlsx,.pptx,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.presentationml.presentation" />
+    </div>
+
+    <button id="btn" type="submit">提交</button>
+    <div id="msg" class="muted" style="margin-top:10px;"></div>
+  </form>
+
+  <script>
+    const f = document.getElementById('f');
+    const btn = document.getElementById('btn');
+    const msg = document.getElementById('msg');
+    const tokenEl = document.getElementById('token');
+
+    const t = new URLSearchParams(location.search).get('t');
+    if (!t) {
+      btn.disabled = true;
+      msg.innerHTML = `<span class="err">此页面需要专属链接才能填写（缺少令牌）。请联系顾问获取链接。</span>`;
+    } else {
+      tokenEl.value = t;
+    }
+
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.textContent = '';
+      btn.disabled = true;
+      try {
+        const fd = new FormData(f);
+        const res = await fetch('/api/submit', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || '提交失败');
+        msg.innerHTML = `<span class="ok">提交成功。编号：${data.id}</span>`;
+        const keepToken = tokenEl.value;
+        f.reset();
+        tokenEl.value = keepToken;
+      } catch (err) {
+        msg.innerHTML = `<span class="err">${err.message}</span>`;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

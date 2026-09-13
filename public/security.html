@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ESG 问卷（保安服务公司专用）</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans CJK SC", "PingFang SC", sans-serif; max-width: 920px; margin: 24px auto; padding: 0 16px; }
+    h1 { font-size: 22px; margin: 0 0 10px; }
+    h2 { font-size: 16px; margin: 16px 0 10px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { font-size: 13px; color: #333; display:block; margin-bottom: 6px; }
+    input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+    textarea { min-height: 92px; }
+    .card { border: 1px solid #eee; padding: 14px; border-radius: 12px; margin: 14px 0; }
+    .row { margin: 10px 0; }
+    .muted { color: #666; font-size: 12px; line-height: 1.45; }
+    button { padding: 10px 14px; border-radius: 10px; border: 0; background: #111; color: #fff; cursor: pointer; }
+    button:disabled { opacity: .6; }
+    .ok { color: #0a7; }
+    .err { color: #c00; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+    .pill { display:inline-block; font-size:12px; padding:2px 8px; border-radius:999px; background:#f3f3f3; margin-left:6px; }
+  </style>
+</head>
+<body>
+  <h1>ESG 问卷（保安服务公司专用）</h1>
+  <p class="muted">
+    用于编制贵司 ESG 报告（E/S/G）。预计 15–25 分钟完成。部分数据如暂缺可留空，并在备注说明。
+    支持上传 PDF/Excel/PPTX，单个文件≤50MB。
+  </p>
+
+  <form id="f" class="card">
+    <input type="hidden" name="token" id="token" />
+
+    <h2>一、公司与业务概况 <span class="pill">必填优先</span></h2>
+    <div class="grid">
+      <div class="row">
+        <label>公司名称（必填）</label>
+        <input name="companyName" required />
+      </div>
+      <div class="row">
+        <label>主要业务模式</label>
+        <input name="industry" placeholder="例如：驻场保安/活动安保/巡更/监控与门禁/方案设计" />
+      </div>
+      <div class="row">
+        <label>服务覆盖地区</label>
+        <input name="region" placeholder="例如：香港/深圳/广州" />
+      </div>
+      <div class="row">
+        <label>是否上市</label>
+        <select name="listingStatus">
+          <option value="">请选择</option>
+          <option value="未上市">未上市</option>
+          <option value="港股">港股</option>
+          <option value="A股">A股</option>
+          <option value="美股/其他">美股/其他</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>员工规模（含全职/兼职/外包/分包）</label>
+        <select name="employeesRange">
+          <option value="">请选择</option>
+          <option value="<50">&lt;50</option>
+          <option value="50-199">50-199</option>
+          <option value="200-999">200-999</option>
+          <option value=">=1000">≥1000</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>主要客户类型</label>
+        <input placeholder="例如：物业/园区/商场/写字楼/学校/医院/政府/金融" data-extra name="clientTypes" />
+      </div>
+      <div class="row">
+        <label>联系人</label>
+        <input name="contactName" />
+      </div>
+      <div class="row">
+        <label>联系邮箱</label>
+        <input name="contactEmail" type="email" />
+      </div>
+    </div>
+
+    <h2>二、环境（E）— 车辆与能耗（可选）</h2>
+    <div class="grid">
+      <div class="row">
+        <label>是否有巡逻/调度车辆</label>
+        <select data-extra name="fleetHas"><option value="">请选择</option><option value="是">是</option><option value="否">否</option></select>
+      </div>
+      <div class="row">
+        <label>车辆数量（按燃料类型，可填“未知”）</label>
+        <input data-extra name="fleetBreakdown" placeholder="例如：汽油 10 / 柴油 3 / 电车 2" />
+      </div>
+      <div class="row">
+        <label>年度用电量（kWh）</label>
+        <input name="energyKwhPerYear" type="number" step="any" />
+      </div>
+      <div class="row">
+        <label>是否统计油耗/电耗</label>
+        <select data-extra name="energyTracking"><option value="">请选择</option><option value="是">是</option><option value="部分">部分</option><option value="否">否</option></select>
+      </div>
+      <div class="row">
+        <label>Scope 1 数据是否已掌握</label>
+        <select name="scope1Known"><option value="no">否</option><option value="yes">是</option></select>
+      </div>
+      <div class="row">
+        <label>Scope 2 数据是否已掌握</label>
+        <select name="scope2Known"><option value="no">否</option><option value="yes">是</option></select>
+      </div>
+      <div class="row">
+        <label>Scope 3 数据是否已掌握</label>
+        <select name="scope3Known"><option value="no">否</option><option value="yes">是</option></select>
+      </div>
+      <div class="row">
+        <label>节能减排举措（简述）</label>
+        <input data-extra name="emissionsActions" placeholder="例如：路线优化/电动车替换计划/电子化排班" />
+      </div>
+    </div>
+
+    <h2>三、社会（S）— 用工、培训、职业健康安全 <span class="pill">建议尽量填</span></h2>
+    <div class="row">
+      <label>用工构成（人数，可估算）</label>
+      <input data-extra name="workforceMix" placeholder="例如：全职 1200；兼职 80；分包/外包 300" />
+    </div>
+    <div class="grid">
+      <div class="row">
+        <label>是否依法签订劳动合同并缴纳社保/强积金（按适用地法规）</label>
+        <select data-extra name="laborCompliance"><option value="">请选择</option><option value="是">是</option><option value="部分">部分</option><option value="否">否</option></select>
+      </div>
+      <div class="row">
+        <label>是否使用分包/外包</label>
+        <select data-extra name="subcontracting"><option value="">请选择</option><option value="是">是</option><option value="否">否</option></select>
+      </div>
+      <div class="row">
+        <label>近一年工伤/事故（如可提供）</label>
+        <input data-extra name="incidents" placeholder="例如：轻伤 3 / 重伤 0 / 死亡 0" />
+      </div>
+      <div class="row">
+        <label>是否提供 PPE（对讲机/反光衣/防割手套等）</label>
+        <select data-extra name="ppe"><option value="">请选择</option><option value="是">是</option><option value="部分">部分</option><option value="否">否</option></select>
+      </div>
+      <div class="row">
+        <label>年度培训：覆盖人数 / 人均小时（如可提供）</label>
+        <input data-extra name="training" placeholder="例如：覆盖 900 人；人均 6 小时" />
+      </div>
+      <div class="row">
+        <label>培训主题（多项用逗号分隔）</label>
+        <input data-extra name="trainingTopics" placeholder="例如：冲突降级/急救/消防/反歧视/隐私保密" />
+      </div>
+    </div>
+
+    <h2>四、治理（G）— 合规、反腐、投诉与隐私</h2>
+    <div class="row">
+      <label>已建立的制度/政策（可列清单）</label>
+      <textarea name="governancePolicies" placeholder="例如：反贿赂/利益冲突/投诉处理/隐私保密/分包管理/OHS制度等"></textarea>
+      <div class="muted">可在附件上传政策文件或员工手册（可脱敏）。</div>
+    </div>
+    <div class="row">
+      <label>近一年合规/处罚/重大风险或负面事件（如无写“无”）</label>
+      <textarea name="complianceIssues" placeholder="例如：监管处罚、重大客诉、信息泄露、过度使用武力等"></textarea>
+    </div>
+    <div class="row">
+      <label>未来 12–24 个月 ESG 目标或改进计划（可选）</label>
+      <textarea name="esgGoals" placeholder="例如：事故率下降目标、培训覆盖率提升、电动车替换、投诉闭环机制等"></textarea>
+    </div>
+    <div class="row">
+      <label>备注（数据口径、边界、缺失原因、补充说明等）</label>
+      <textarea name="notes" id="notes" placeholder="可写：报告期、统计口径、哪些数据在客户项目层面/总部层面、暂无数据原因等"></textarea>
+    </div>
+
+    <h2>五、上传资料（可选）</h2>
+    <div class="row">
+      <label>上传 PDF / Excel / PPTX（最多 5 个）</label>
+      <input name="files" type="file" multiple accept=".pdf,.xls,.xlsx,.pptx,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.presentationml.presentation" />
+      <div class="muted">例如：公司介绍/资质证书、培训记录（可脱敏）、OHS制度、投诉机制说明、车辆台账、能耗台账等。</div>
+    </div>
+
+    <button id="btn" type="submit">提交</button>
+    <div id="msg" class="muted" style="margin-top:10px;"></div>
+  </form>
+
+  <script>
+    const f = document.getElementById('f');
+    const btn = document.getElementById('btn');
+    const msg = document.getElementById('msg');
+    const tokenEl = document.getElementById('token');
+    const notesEl = document.getElementById('notes');
+
+    const t = new URLSearchParams(location.search).get('t');
+    if (!t) {
+      btn.disabled = true;
+      msg.innerHTML = `<span class="err">此页面需要专属链接才能填写（缺少令牌）。请联系顾问获取链接。</span>`;
+    } else {
+      tokenEl.value = t;
+    }
+
+    function buildExtraBlock() {
+      const extras = Array.from(document.querySelectorAll('[data-extra]'))
+        .map((el) => {
+          const label = el.closest('.row')?.querySelector('label')?.textContent?.trim() || el.name;
+          const v = (el.value || '').trim();
+          if (!v) return null;
+          return `- ${label}: ${v}`;
+        })
+        .filter(Boolean);
+
+      if (!extras.length) return '';
+      return `\n\n【保安公司补充信息】\n${extras.join('\n')}`;
+    }
+
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.textContent = '';
+      btn.disabled = true;
+
+      // Append extra fields into notes so the backend (current schema) can store them.
+      const extraBlock = buildExtraBlock();
+      if (extraBlock) {
+        const base = (notesEl.value || '').trim();
+        notesEl.value = base ? (base + extraBlock) : extraBlock.trim();
+      }
+
+      try {
+        const fd = new FormData(f);
+        const res = await fetch('/api/submit', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || '提交失败');
+        msg.innerHTML = `<span class="ok">提交成功。编号：${data.id}</span>`;
+        const keepToken = tokenEl.value;
+        f.reset();
+        tokenEl.value = keepToken;
+      } catch (err) {
+        msg.innerHTML = `<span class="err">${err.message}</span>`;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
