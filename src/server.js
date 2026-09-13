@@ -29,13 +29,14 @@ const NOTIFY_TARGET = process.env.NOTIFY_TARGET || ""; // Telegram chat id (e.g.
 const OPENCLAW_BASE_URL = process.env.OPENCLAW_BASE_URL || "http://127.0.0.1:18789";
 const OPENCLAW_TOKEN = process.env.OPENCLAW_TOKEN || "";
 const OPENCLAW_AGENT_ID = process.env.OPENCLAW_AGENT_ID || "main";
+const OPENCLAW_MODEL = process.env.OPENCLAW_MODEL || "openclaw";
 
 ensureDir(DATA_DIR);
 ensureDir(UPLOAD_DIR);
 ensureDir(REPORT_DIR);
 
 const db = openDb(DATA_DIR);
-const llm = makeOpenClawClient({ baseUrl: OPENCLAW_BASE_URL, token: OPENCLAW_TOKEN, agentId: OPENCLAW_AGENT_ID });
+const llm = makeOpenClawClient({ baseUrl: OPENCLAW_BASE_URL, token: OPENCLAW_TOKEN, agentId: OPENCLAW_AGENT_ID, model: OPENCLAW_MODEL });
 
 function notifyNewSubmission({ companyName, id }) {
   if (!NOTIFY_ENABLED) return;

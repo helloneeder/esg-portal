@@ -48,6 +48,7 @@ npm start
 | OPENCLAW_BASE_URL | OpenClaw Gateway 地址 | 是 |
 | OPENCLAW_TOKEN | Gateway 管理员令牌 | 是 |
 | OPENCLAW_AGENT_ID | 调用的 agent id | 否（默认 main） |
+| OPENCLAW_MODEL | 使用的模型 | 否（默认 openclaw） |
 | OPENCLAW_MODEL | 使用的模型 | 否 |
 | DATA_DIR | 数据目录（数据库+上传） | 否（默认 ./data） |
 | REPORT_DIR | 报告输出目录 | 是 |

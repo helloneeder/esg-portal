@@ -1,4 +1,4 @@
-export function makeOpenClawClient({ baseUrl, token, agentId = "main" }) {
+export function makeOpenClawClient({ baseUrl, token, agentId = "main", model = "openclaw" }) {
   if (!baseUrl) throw new Error("OPENCLAW_BASE_URL is required");
   if (!token) throw new Error("OPENCLAW_TOKEN is required");
 
@@ -14,7 +14,7 @@ export function makeOpenClawClient({ baseUrl, token, agentId = "main" }) {
           "x-openclaw-agent-id": agentId,
         },
         body: JSON.stringify({
-          model: "openclaw",
+          model,
           temperature,
           max_tokens,
           user,
